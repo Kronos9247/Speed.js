@@ -1,2 +1,2 @@
 # Speed.js
-A very easy web-framework for component based webpage
+Speed helps your to speed up your web development process by using components
