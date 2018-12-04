@@ -1,3 +1,9 @@
+/*
+  Copyright (c) 2018 Rafael Orman
+  
+  This file is a part of "Speed.js" which is licensed under the MIT License.
+*/
+
 if (Speed)
 {
   var transformAttr = function (element) {
