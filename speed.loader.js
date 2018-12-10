@@ -36,14 +36,15 @@ if (Speed)
     return null;
   }
 
-  Speed.handleChild(child) {
+  Speed.handleChild = function (_child) {
+    let child = $(_child);
     if(child.prop('tagName') == "COMPONENT") return Speed.initComponent(null, child);
 
     return new ComponentProperty(transformAttr($(child)));
   }
 
   Speed.loadChildren = function (parent) {
-    let children = $(parent).children(), childs = {};
+    let children = $(parent).children(), childs = [];
     for (var i = 0; i < children.length; i++) {
       let property = Speed.handleChild(children[i]);
 
@@ -68,8 +69,8 @@ if (Speed)
     if (component) {
       let childs = Speed.loadChildren($(element));
       if (childs.length > 0) component.props.children = childs;
-
-      $(object.render()).insertAfter(element);
+      
+      $(component.render()).insertAfter(element);
       element.remove();
     }
   };
