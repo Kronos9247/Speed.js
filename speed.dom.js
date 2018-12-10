@@ -1,8 +1,4 @@
-/*
-  Copyright (c) 2018 Rafael Orman
-  
-  This file is a part of "Speed.js" which is licensed under the MIT License.
-*/
+//how to speed up web development? just use speed.js and speed.js dom
 
 if (!Speed)
 {
@@ -11,8 +7,7 @@ if (!Speed)
 
 const DOM = {};
 DOM.init = function (component, props) {
-  let object = new component();
-  object.props = props;
+  let object = new component(props);
 
   return object;
 }

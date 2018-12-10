@@ -1,9 +1,3 @@
-/*
-  Copyright (c) 2018 Rafael Orman
-  
-  This file is a part of "Speed.js" which is licensed under the MIT License.
-*/
-
 const Speed = {};
 if (!Speed)
 {
@@ -11,6 +5,10 @@ if (!Speed)
 }
 
 class Component {
+  constructor(props) {
+    this.props = props;
+  }
+
   render() {
     return $('<div></div>');
   }

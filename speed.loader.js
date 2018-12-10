@@ -1,11 +1,11 @@
-/*
-  Copyright (c) 2018 Rafael Orman
-  
-  This file is a part of "Speed.js" which is licensed under the MIT License.
-*/
-
 if (Speed)
 {
+  class ComponentProperty {
+    constructor(attributes) {
+      this.attributes = attributes;
+    }
+  }
+
   var transformAttr = function (element) {
     let attrib = element[0];
     let attr = {};
@@ -24,14 +24,52 @@ if (Speed)
 
     return attr;
   }
+  Speed.initComponent = function (type, element) {
+    let component = type;
+    if(component === null) component = element.attr('type');
+    if(typeof component === "string") component = eval(`${component};`);
+
+    if(component) {
+      return Speed.DOM.init(component, transformAttr($(element)));
+    }
+
+    return null;
+  }
+
+  Speed.handleChild(child) {
+    if(child.prop('tagName') == "COMPONENT") return Speed.initComponent(null, child);
+
+    return new ComponentProperty(transformAttr($(child)));
+  }
+
+  Speed.loadChildren = function (parent) {
+    let children = $(parent).children(), childs = {};
+    for (var i = 0; i < children.length; i++) {
+      let property = Speed.handleChild(children[i]);
+
+      if (property)
+        childs[i] = property;
+    }
+
+    return childs;
+  }
 
   Speed.prepare = function (element, type) {
-    let component = eval(`${type};`); //need to be changed later
+    /*let component = eval(`${type};`); //need to be changed later
 
     if (component) {
       let object = Speed.DOM.init(component, transformAttr($(element)));
-      $(object.render()).insertAfter(element);
 
+
+      $(object.render()).insertAfter(element);
+      element.remove();
+    }*/
+    let component = Speed.initComponent(type, $(element));
+    if (component) {
+      let childs = Speed.loadChildren($(element));
+      if (childs.length > 0) component.props.children = childs;
+
+      $(object.render()).insertAfter(element);
       element.remove();
     }
   };
